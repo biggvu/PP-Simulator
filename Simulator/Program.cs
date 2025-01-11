@@ -1,56 +1,54 @@
-﻿namespace Simulator;
+﻿using Simulator.Maps;
+
+namespace Simulator;
 public class Program
 {
     public static void Main(string[] args)
     {
         Console.WriteLine("Starting Simulator!\n");
 
-        Lab5a();
+        Lab5b();
 
     }
 
-    static void Lab5a()
+    static void Lab5b()
     {
         try
         {
-            var rect1 = new Rectangle(10, 5, 2, 15);
-            Console.WriteLine(rect1);
-
+            var map = new Maps.SmallSquareMap(10);
+            Console.WriteLine($"Map has been created, size = {map.Size}");
         }
-
-        catch (ArgumentException e)
+        catch (ArgumentOutOfRangeException e)
         {
-            Console.WriteLine(e.Message);
-        }
-        try
-        {
-            var point1 = new Point(3, 3);
-            var point2 = new Point(8, 7);
-            var rect2 = new Rectangle(point1, point2);
-            Console.WriteLine(rect2);
-        }
-
-        catch (ArgumentException e)
-        {
-            Console.WriteLine(e.Message);
+            Console.WriteLine($"Error: {e.Message}");
         }
 
         try
         {
-            var rect3 = new Rectangle(3, 3, 3, 10);
+            var invalidMap = new SmallSquareMap(21);
         }
-        catch (ArgumentException e)
+        catch (ArgumentOutOfRangeException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine($"Error: {e.Message}");
         }
 
-        var rect4 = new Rectangle(2, 3, 10, 15);
-        Console.WriteLine(rect4);
+        var map10x10 = new SmallSquareMap(10);
+        var pointInside = new Point(5, 5);
+        var pointOutside = new Point(10, 10); 
+   
+        Console.WriteLine($"Point {pointInside} exists on the map: {map10x10.Exist(pointInside)}");
+        Console.WriteLine($"Point {pointOutside} exists on the map: {map10x10.Exist(pointOutside)}");
 
-        var pointInside = new Point(5, 10);
-        var pointOutside = new Point(1, 2);
+        var point = new Point(9, 9);
+        var nextPoint = map10x10.Next(point, Direction.Right);
+        Console.WriteLine($"Moving {point} Right: {nextPoint} (should be {point}, as it cannot go outside)");
 
-        Console.WriteLine($"Contains {pointInside}: {rect4.Contains(pointInside)}");
-        Console.WriteLine($"Contains {pointOutside}: {rect4.Contains(pointOutside)}");
+        var pointIn = new Point(9, 9);
+        var nextInPoint = map10x10.Next(pointIn, Direction.Left);
+        Console.WriteLine($"Moving {pointIn} Left: {nextInPoint} (should be {new Point(8, 9)})");
+
+        var edgePoint = new Point(9, 9);
+        var nextEdgePoint = map10x10.NextDiagonal(edgePoint, Direction.Right);
+        Console.WriteLine($"Moving {edgePoint} Right Diagonal: {nextEdgePoint} (should be {new Point(9, 9)})");
     }
 }
