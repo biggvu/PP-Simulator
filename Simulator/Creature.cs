@@ -66,8 +66,8 @@ namespace Simulator
         public abstract string Info { get; }
 
 
-        //metoda SayHi()
-        public abstract void SayHi();
+        //metoda SayHi() zmieniona na Greeting()
+        public abstract string Greeting();
 
         //metoda Upgrade(), która pozwoli na awansowanie stwora o jeden poziom, ale nie powyżej 10-go.
         public void Upgrade()
@@ -78,27 +78,24 @@ namespace Simulator
             }
         }
 
-        //metoda Go() przyjmuje parametr typu Direction i wypisuje w linii informację o ruchu
-        public void Go(Direction direction)
+        //metoda Go() przyjmuje parametr typu Direction i wypisuje w linii informację o ruchu, zmieniona na string Go()
+        public string Go(Direction direction)
         {
             string directionName = direction.ToString().ToLower();
-            Console.WriteLine($"{Name} goes {directionName}.");
+            return $"{Name} goes {directionName}.";
         }
 
-        //kolejna metoda Go() przyjmującą tablicę kierunków i wykonującą kolejno kilka ruchów przez wywołanie pierwszej metody Go()
-        public void Go(Direction[] directions)
+        //kolejna metoda Go() przyjmującą tablicę kierunków i wykonującą kolejno kilka ruchów przez wywołanie pierwszej metody Go(), zmieniona na string[] Go()
+        public string[] Go(Direction[] directions)
         {
-            foreach (var direction in directions)
-            {
-                Go(direction);
-            }
+            return directions.Select(Direction => Go(Direction)).ToArray();
         }
 
-        //kolejna metodę Go() przyjmującą jako argument string powodującą odpowiednie ruchy stwora
-        public void Go(string directions)
+        //kolejna metodę Go() przyjmującą jako argument string powodującą odpowiednie ruchy stwora, zmieniona na string[] Go()
+        public string[] Go(string directions)
         {
             Direction[] parsedDirections = DirectionParser.Parse(directions);
-            Go(parsedDirections);
+            return Go(parsedDirections);
         }
 
         //abstrakcyjna klasa Power()

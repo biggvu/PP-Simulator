@@ -51,23 +51,20 @@ namespace Simulator
             Rage = rage;
         }
 
-        //implementacja metody abstrakcyjnejj SayHi()
-        public override void SayHi()
+        //implementacja metody abstrakcyjnej SayHi(), zmieniona później na Greeting()
+        public override string Greeting()
         {
-            Console.WriteLine($"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.");
+            return $"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.";
         }
 
         public void Hunt()
         {
             //co drugie polowanie zwiększa szał
             _huntCounter++;
-            Console.WriteLine($"{Name} is hunting.");
 
             if (_huntCounter % 2 == 0)
             {
-                //Rage++;
                 ModifyRage(1);
-                Console.WriteLine($"{Name} rage increased to {Rage}");
             }
         }
     }

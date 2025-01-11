@@ -1,6 +1,7 @@
-﻿using Simulator.Maps;
+﻿using Simulator;
+using Simulator.Maps;
 
-namespace Simulator;
+namespace Runner;
 public class Program
 {
     public static void Main(string[] args)
@@ -15,7 +16,7 @@ public class Program
     {
         try
         {
-            var map = new Maps.SmallSquareMap(10);
+            var map = new SmallSquareMap(10);
             Console.WriteLine($"Map has been created, size = {map.Size}");
         }
         catch (ArgumentOutOfRangeException e)

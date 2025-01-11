@@ -51,23 +51,20 @@ namespace Simulator
         }
 
 
-        //implementacja metody abstrakcyjnejj SayHi()
-        public override void SayHi()
+        //implementacja metody abstrakcyjnejj SayHi(), zmieniona później na Greening()
+        public override string Greeting()
         {
-            Console.WriteLine($"Hi, I'm {Name}, my level is {Level}, my agility is {Agility}.");
+            return $"Hi, I'm {Name}, my level is {Level}, my agility is {Agility}.";
         }
 
         public void Sing()
         {
             //co trzeci śpiew zwiększa zwinność
             _singCounter++;
-            Console.WriteLine($"{Name} is singing.");
 
             if (_singCounter % 3 == 0)
             {
-                //Agility++;
                 ModifyAgility(1);
-                Console.WriteLine($"{Name} agility increased to {Agility}");
             }
 
         }
