@@ -10,6 +10,7 @@ namespace Simulator
     {
 
         private int _agility = 1;
+        private bool isAgilityInitialized = false;
         private int _singCounter = 0; //licznik wywołań metody Sing()
         public int Agility
         {
@@ -17,18 +18,10 @@ namespace Simulator
 
             init
             {
-                //ustalenie wartości w zakresie 0-10
-                if (value < 0)
+                if (Validator.isAlreadyInitialized(isAgilityInitialized, nameof(Agility)))
                 {
-                    _agility = 0;
-                }
-                else if (value > 10)
-                {
-                    _agility = 10;
-                }
-                else
-                {
-                    _agility = value;
+                    _agility = Validator.Limiter(value, 0, 10);
+                    isAgilityInitialized = true;
                 }
             }
         }
@@ -41,6 +34,9 @@ namespace Simulator
 
         //właściwość Power
         public override int Power => 8*Level + 2*Agility;
+
+        //implementacja właściwości Info
+        public override string Info => $"{Name} [{Level}][{Agility}]";
 
         //konstruktor bezparametrowy
         public Elf() : base()

@@ -10,6 +10,7 @@ namespace Simulator
     {
 
         private int _rage = 1;
+        private bool isRageInitialized = false;
         private int _huntCounter = 0; //licznik wywołań metody Hunt()
 
         public int Rage
@@ -18,18 +19,10 @@ namespace Simulator
 
             init
             {
-                //ustalenie wartości w zakresie 0-10
-                if (value < 0)
+                if (Validator.isAlreadyInitialized(isRageInitialized, nameof(Rage)))
                 {
-                    _rage = 0;
-                }
-                else if (value > 10)
-                {
-                    _rage = 10;
-                }
-                else
-                {
-                    _rage = value;
+                    _rage = Validator.Limiter(value, 0, 10);
+                    isRageInitialized = true;
                 }
             }
         }
@@ -42,6 +35,9 @@ namespace Simulator
 
         //właściwość Power
         public override int Power => 7*Level + 3*Rage;
+
+        //implementacja właściwości Info
+        public override string Info => $"{Name} [{Level}][{Rage}]";
 
         //konstruktor bezparametrowy
         public Orc() : base()

@@ -9,6 +9,7 @@ namespace Simulator
     public class Animals
     {
         private string _description = "Default"; //wartość domyślna "Default", aby uniknąć ostrzeżenia kompilatora
+        private bool isDescriptionInitialized = false;
 
         public string Description
         {
@@ -16,44 +17,25 @@ namespace Simulator
 
             set
             {
-                //usuwanie nadmiarowych spacji na początku i na końcu
-                string trimmedDescription = value.Trim();
-
-                if (string.IsNullOrWhiteSpace(trimmedDescription))
+                if (Validator.isAlreadyInitialized(isDescriptionInitialized, nameof(Description)))
                 {
-                    trimmedDescription = "###";
+                    //zamiana na pierwszą wielką literę
+                    var formattedValue = Validator.Shortener(value, 3, 25, '#');
+                    _description = char.ToUpper(formattedValue[0]) + formattedValue.Substring(1);
+                    isDescriptionInitialized = true;
                 }
-                //minimalnie 3 znaki, brakujące są uzpełniane znakiem '#'
-                if (trimmedDescription.Length < 3)
-                {
-                    trimmedDescription = trimmedDescription.PadRight(3, '#');
-                }
-                //maksymalnie 15 znaków, przycięcie tych za długich
-                if (trimmedDescription.Length > 15)
-                {
-                    trimmedDescription = trimmedDescription.Substring(0, 15).Trim();
-                }
-                //sprawdzenie czy wciąż name ma przynajmniej 3 znaki
-                if (trimmedDescription.Length < 3)
-                {
-                    trimmedDescription = trimmedDescription.PadRight(3, '#');
-                }
-                //ustawianie pierwszej litery na wielką
-                if (char.IsLower(trimmedDescription[0]))
-                {
-                    trimmedDescription = char.ToUpper(trimmedDescription[0]) + trimmedDescription.Substring(1);
-                }
-
-                _description = trimmedDescription;
             }
         }
 
         public uint Size { get; set; } = 3;
 
-        //właściwość do odczytu Info zwracająca opis i liczebność w formie: Dogs <3>
-        public string Info
+        //właściwość Info zmieniona na klasę wirtualną
+        public virtual string Info => $"{Description} <{Size}>";
+
+        //nadpisanie ToString()
+        public override string ToString()
         {
-            get { return $"{Description} <{Size}>"; }
+            return $"{GetType().Name.ToUpper()}: {Info}";
         }
     }
 }

@@ -20,71 +20,35 @@ namespace Simulator
         {
             get { return _name; }
 
-            set
+            //setter z użyciem validatora
+            set 
             {
-                //name można nadać tylko raz przy inicjacji, próba nadania kolejny raz zwraca wyjątek InvalidOperationException
-                if (isNameInitialized == true)
+                if (Validator.isAlreadyInitialized(isNameInitialized, nameof(Name)))
                 {
-                    Console.WriteLine($"Name can only be set once. Current name: {_name}");
-                    return;
+                    //zamiana na pierwszą wielką literę
+                    var formattedValue = Validator.Shortener(value, 3, 25, '#');
+                    _name = char.ToUpper(formattedValue[0]) + formattedValue.Substring(1);
+                    isNameInitialized = true;
                 }
-
-                //usuwanie nadmiarowych spacji na początku i na końcu
-                string trimmedName = value.Trim();
-
-                //minimalnie 3 znaki, brakujące są uzpełniane znakiem '#'
-                if (trimmedName.Length < 3)
-                {
-                    trimmedName = trimmedName.PadRight(3, '#');
-                }
-                //maksymalnie 25 znaków, przycięcie tych za długich
-                if (trimmedName.Length > 25)
-                {
-                    trimmedName = trimmedName.Substring(0, 25).Trim();
-                }
-                //sprawdzenie czy wciąż name ma przynajmniej 3 znaki
-                if (trimmedName.Length < 3)
-                {
-                    trimmedName = trimmedName.PadRight(3, '#');
-                }
-                //ustawianie pierwszej litery na wielką
-                if (char.IsLower(trimmedName[0]))
-                {
-                    trimmedName = char.ToUpper(trimmedName[0]) + trimmedName.Substring(1);
-                }
-
-                _name = trimmedName;
-                isNameInitialized = true;
-
             }
+
         }
+
+
         public int Level
         {
             get { return _level; }
 
+            //setter z użyciem validatora
             set
             {
-                //level można nadać tylko raz przy inicjacji, próba nadania kolejny raz zwraca wyjątek InvalidOperationException
-                if (isLevelInitialized == true)
+                if (Validator.isAlreadyInitialized(isLevelInitialized, nameof(Level)))
                 {
-                    Console.WriteLine($"Level can only be set once. Current level: {_level}");
-                    return;
+                    _level = Validator.Limiter(value, 1, 10);
+                    isLevelInitialized = true;
                 }
-
-                //ustawienie wartości z przedziału 1-10
-                if (value < 1)
-                {
-                    value = 1;
-                }
-                if (value > 10)
-                {
-                    value = 10;
-                }
-                _level = value;
-                isLevelInitialized = true;
             }
         }
-
         // konstruktor przyjmujący wartości początkowe dla Name i opcjonalnie dla Level (wartość domyślna 1), konstruktor ma inicjować pola poprzez ich settery
         public Creature(string name, int level = 1)
         {
@@ -98,14 +62,9 @@ namespace Simulator
 
         }
 
-        //właściwość do odczytu Info
-        public virtual string Info
-        {
-            get
-            {
-                return $"{Name} [{Level}]";
-            }
-        }
+        //właściwość do odczytu Info, zmieniona na abstrakcyjną
+        public abstract string Info { get; }
+
 
         //metoda SayHi()
         public abstract void SayHi();
@@ -144,5 +103,11 @@ namespace Simulator
 
         //abstrakcyjna klasa Power()
         public abstract int Power { get; }
+
+        //nadpisanie metody ToString()
+        public override string ToString()
+        {
+            return $"{GetType().Name.ToUpper()}: {Info}";
+        }
     }
 }
