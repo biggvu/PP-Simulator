@@ -121,5 +121,28 @@ namespace Simulator
                 _level++;
             }
         }
+
+        //metoda Go() przyjmuje parametr typu Direction i wypisuje w linii informację o ruchu
+        public void Go (Direction direction)
+        {
+            string directionName = direction.ToString().ToLower();
+            Console.WriteLine($"{Name} goes {directionName}.");
+        }
+
+        //kolejna metoda Go() przyjmującą tablicę kierunków i wykonującą kolejno kilka ruchów przez wywołanie pierwszej metody Go()
+        public void Go(Direction[] directions)
+        {
+            foreach (var direction in directions)
+            {
+                Go(direction);
+            }
+        }
+
+        //kolejna metodę Go() przyjmującą jako argument string powodującą odpowiednie ruchy stwora
+        public void Go(string directions)
+        {
+            Direction[] parsedDirections = DirectionParser.Parse(directions);
+            Go(parsedDirections);
+        }
     }
 }
