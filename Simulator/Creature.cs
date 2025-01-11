@@ -8,9 +8,9 @@ using System.Xml.Linq;
 
 namespace Simulator
 {
-    internal class Creature
+    public abstract class Creature
     {
-       
+
         private string _name = "Unknown"; //wartość domyślna "Unknown"
         private int _level = 1; //domyślna wartość początkowa "1"
         private bool isNameInitialized = false;
@@ -18,7 +18,7 @@ namespace Simulator
 
         public string Name
         {
-            get {return _name;}
+            get { return _name; }
 
             set
             {
@@ -60,7 +60,7 @@ namespace Simulator
         }
         public int Level
         {
-            get {return _level;}
+            get { return _level; }
 
             set
             {
@@ -86,7 +86,7 @@ namespace Simulator
         }
 
         // konstruktor przyjmujący wartości początkowe dla Name i opcjonalnie dla Level (wartość domyślna 1), konstruktor ma inicjować pola poprzez ich settery
-        public Creature (string name, int level = 1)
+        public Creature(string name, int level = 1)
         {
             Name = name;
             Level = level;
@@ -99,7 +99,7 @@ namespace Simulator
         }
 
         //właściwość do odczytu Info
-        public string Info
+        public virtual string Info
         {
             get
             {
@@ -108,10 +108,7 @@ namespace Simulator
         }
 
         //metoda SayHi()
-        public void SayHi()
-        {
-            Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
-        }
+        public abstract void SayHi();
 
         //metoda Upgrade(), która pozwoli na awansowanie stwora o jeden poziom, ale nie powyżej 10-go.
         public void Upgrade()
@@ -123,7 +120,7 @@ namespace Simulator
         }
 
         //metoda Go() przyjmuje parametr typu Direction i wypisuje w linii informację o ruchu
-        public void Go (Direction direction)
+        public void Go(Direction direction)
         {
             string directionName = direction.ToString().ToLower();
             Console.WriteLine($"{Name} goes {directionName}.");
@@ -144,5 +141,8 @@ namespace Simulator
             Direction[] parsedDirections = DirectionParser.Parse(directions);
             Go(parsedDirections);
         }
+
+        //abstrakcyjna klasa Power()
+        public abstract int Power { get; }
     }
 }
