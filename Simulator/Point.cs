@@ -17,9 +17,9 @@ namespace Simulator
         {
             return direction switch
             {
-                Direction.Up => new Point(X, Y - 1),
+                Direction.Up => new Point(X, Y + 1),
                 Direction.Right => new Point(X + 1, Y),
-                Direction.Down => new Point(X, Y + 1),
+                Direction.Down => new Point(X, Y - 1),
                 Direction.Left => new Point(X - 1, Y),
                 _ => this
             };
@@ -30,10 +30,10 @@ namespace Simulator
         {
             return direction switch
             {
-                Direction.Up => new Point(X + 1, Y - 1), //prway górny
-                Direction.Right => new Point(X + 1, Y + 1), //prawy dolny  
-                Direction.Down => new Point(X - 1, Y + 1), //lewy dolny
-                Direction.Left => new Point(X - 1, Y - 1), //lewy górny
+                Direction.Up => new Point(X + 1, Y + 1), //prawy górny
+                Direction.Right => new Point(X + 1, Y - 1), //prawy dolny  
+                Direction.Down => new Point(X - 1, Y - 1), //lewy dolny
+                Direction.Left => new Point(X - 1, Y + 1), //lewy górny
                 _ => this
             };
         }
