@@ -5,26 +5,52 @@ public class Program
     {
         Console.WriteLine("Starting Simulator!\n");
 
-        Lab4b();
+        Lab5a();
 
     }
 
-    static void Lab4b()
+    static void Lab5a()
     {
-        object[] myObjects = {
-        new Animals() { Description = "dogs"},
-        new Birds { Description = "  eagles ", Size = 10 },
-        new Elf("e", 15, -3),
-        new Orc("morgash", 6, 4)
-    };
-        Console.WriteLine("\nMy objects:");
-        foreach (var o in myObjects) Console.WriteLine(o);
-        /*
-            My objects:
-            ANIMALS: Dogs <3>
-            BIRDS: Eagles (fly+) <10>
-            ELF: E## [10][0]
-            ORC: Morgash [6][4]
-        */
+        try
+        {
+            var rect1 = new Rectangle(10, 5, 2, 15);
+            Console.WriteLine(rect1);
+
+        }
+
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        try
+        {
+            var point1 = new Point(3, 3);
+            var point2 = new Point(8, 7);
+            var rect2 = new Rectangle(point1, point2);
+            Console.WriteLine(rect2);
+        }
+
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        try
+        {
+            var rect3 = new Rectangle(3, 3, 3, 10);
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        var rect4 = new Rectangle(2, 3, 10, 15);
+        Console.WriteLine(rect4);
+
+        var pointInside = new Point(5, 10);
+        var pointOutside = new Point(1, 2);
+
+        Console.WriteLine($"Contains {pointInside}: {rect4.Contains(pointInside)}");
+        Console.WriteLine($"Contains {pointOutside}: {rect4.Contains(pointOutside)}");
     }
 }
