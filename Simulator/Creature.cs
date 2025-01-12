@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Simulator.Maps;
 
 namespace Simulator
 {
@@ -56,11 +57,13 @@ namespace Simulator
             Level = level;
         }
 
-        //konstruktor bezparametrowy nic nie robiący
-        public Creature()
-        {
+        //pole Position, które przechowuje pozycję stwora na planszy
+        public Point? Position { get; private set; }
+        //pole Map, które przechowuje referencję do obiektu klasy Map
+        public Map? Map { get; private set; }
 
-        }
+        //konstruktor bezparametrowy nic nie robiący
+        public Creature() { }
 
         //właściwość do odczytu Info, zmieniona na abstrakcyjną
         public abstract string Info { get; }
@@ -78,24 +81,47 @@ namespace Simulator
             }
         }
 
+        //metod do przypisania stworowi mapy i pozycji na niej
+        public void AssignMap(Map map, Point position)
+        {
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
+            if (!map.Exist(position))
+                throw new ArgumentOutOfRangeException(nameof(position), "Position is outside the map.");
+
+            //usuwa stwora z poprzedniej mapy, jeśli na takowej istnieje
+            if (Map is SmallMap oldSmallMap && Position != null)
+            {
+                oldSmallMap.Remove(this, Position.Value);
+            }
+
+            Map = map;
+            Position = position;
+
+            if (Map is SmallMap smallMap)
+            {
+                smallMap.Add(this, position);
+            }
+        }
+
+
         //metoda Go() przyjmuje parametr typu Direction i wypisuje w linii informację o ruchu, zmieniona na string Go()
         public string Go(Direction direction)
         {
-            string directionName = direction.ToString().ToLower();
-            return $"{Name} goes {directionName}.";
-        }
+            if (Position == null || Map == null)
+            {
+                return $"{Name} is not assigned to the map.";
+            }
+            Point newPosition = Map.Next(Position.Value, direction);
 
-        //kolejna metoda Go() przyjmującą tablicę kierunków i wykonującą kolejno kilka ruchów przez wywołanie pierwszej metody Go(), zmieniona na string[] Go()
-        public string[] Go(Direction[] directions)
-        {
-            return directions.Select(Direction => Go(Direction)).ToArray();
-        }
+            if (Map is SmallMap smallMap && Position != null)
+            {
+                smallMap.Move(this, Position.Value, newPosition);
+            }
 
-        //kolejna metodę Go() przyjmującą jako argument string powodującą odpowiednie ruchy stwora, zmieniona na string[] Go()
-        public string[] Go(string directions)
-        {
-            List <Direction> parsedDirections = DirectionParser.Parse(directions);
-            return Go(parsedDirections.ToArray());
+            Position = newPosition;
+
+            return $"{Name} moved to {Position}.";
         }
 
         //abstrakcyjna klasa Power()

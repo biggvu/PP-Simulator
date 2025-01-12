@@ -35,6 +35,7 @@ namespace Simulator.Maps
             return p.X >= 0 && p.X < SizeX && p.Y >= 0 && p.Y < SizeY;
         }
 
+  
 
         /// <summary>
         /// Next position to the point in a given direction.
