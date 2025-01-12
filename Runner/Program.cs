@@ -17,7 +17,7 @@ public class Program
         try
         {
             var map = new SmallSquareMap(10);
-            Console.WriteLine($"Map has been created, size = {map.Size}");
+            Console.WriteLine($"Map has been created, size = {map.SizeX}");
         }
         catch (ArgumentOutOfRangeException e)
         {

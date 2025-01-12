@@ -8,13 +8,13 @@ namespace Simulator
 {
     public static class DirectionParser
     {
-        public static Direction[] Parse(string input)
+        public static List<Direction> Parse(string input)
         {
 
             //jeśli input jest pusty zwracamy pustą tablicę
             if (string.IsNullOrWhiteSpace(input))
             {
-                return Array.Empty<Direction>();
+                return new List<Direction>();
             }
 
             //lista, która przechowuje poprawne kierunki
@@ -44,7 +44,7 @@ namespace Simulator
                 }
             }
             //zwracamy wynik jako tablicę kierunków
-            return directions.ToArray();
+            return directions;
         }
     }
 }

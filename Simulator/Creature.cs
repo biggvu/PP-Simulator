@@ -94,8 +94,8 @@ namespace Simulator
         //kolejna metodę Go() przyjmującą jako argument string powodującą odpowiednie ruchy stwora, zmieniona na string[] Go()
         public string[] Go(string directions)
         {
-            Direction[] parsedDirections = DirectionParser.Parse(directions);
-            return Go(parsedDirections);
+            List <Direction> parsedDirections = DirectionParser.Parse(directions);
+            return Go(parsedDirections.ToArray());
         }
 
         //abstrakcyjna klasa Power()

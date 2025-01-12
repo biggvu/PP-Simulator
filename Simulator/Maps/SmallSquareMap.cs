@@ -6,34 +6,16 @@ using System.Threading.Tasks;
 
 namespace Simulator.Maps
 {
-    public class SmallSquareMap : Map
+    public class SmallSquareMap : SmallMap
     {
-        public int Size { get; }
-
-        public SmallSquareMap(int size)
-        {
-
-            //sprawdzenie czy rozmiar mapy jest z przedziału 5-20
-            if (size < 5 || size > 20)
-            {
-                //dla nieakceptowanych rozmiarów dostajemy poniższy wyjątek
-                throw new ArgumentOutOfRangeException("Size must be between 5 and 20");
-            }
-            Size = size;
-        }
-
-        //sprawdzenie czy punkt istnieje na mapie
-        public override bool Exist(Point p)
-        {
-            return p.X >= 0 && p.X < Size && p.Y >= 0 && p.Y < Size;
-        }
+        public SmallSquareMap(int size) : base(size, size) { }
 
         //zwraca nowy punkt przesunięty o jedno pole w podanym kierunku
         public override Point Next(Point p, Direction d)
         {
             var nextPoint = p.Next(d);
-            int newX = (nextPoint.X + Size) % Size;
-            int newY = (nextPoint.Y + Size) % Size;
+            int newX = (nextPoint.X + SizeX) % SizeX;
+            int newY = (nextPoint.Y + SizeY) % SizeY;
             return new Point(newX, newY);
         }
 
@@ -41,8 +23,8 @@ namespace Simulator.Maps
         public override Point NextDiagonal(Point p, Direction d)
         {
             var nextPoint = p.NextDiagonal(d);
-            int newX = (nextPoint.X + Size) % Size;
-            int newY = (nextPoint.Y + Size) % Size;
+            int newX = (nextPoint.X + SizeX) % SizeX;
+            int newY = (nextPoint.Y + SizeY) % SizeY;
             return new Point(newX, newY);
         }
     }

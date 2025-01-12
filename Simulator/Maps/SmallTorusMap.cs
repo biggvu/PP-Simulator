@@ -6,39 +6,24 @@ using System.Threading.Tasks;
 
 namespace Simulator.Maps
 {
-    public class SmallTorusMap : Map
+    public class SmallTorusMap : SmallMap
     {
-        //właściwość do odczytu Size, przechowująca rozmiar torusa
-        public int Size { get; }
-
         //konstruktor, już zaimplementowany
-        public SmallTorusMap(int size)
-        {
-            if (size < 5 || size > 20)
-            {
-                throw new ArgumentOutOfRangeException("Size must be between 5 and 20");
-            }
-            Size = size;
-        }
-
-        public override bool Exist(Point p)
-        {
-            return p.X >= 0 && p.X < Size && p.Y >= 0 && p.Y < Size;
-        }
+        public SmallTorusMap(int size) : base(size, size) { }
 
         public override Point Next(Point p, Direction d)
         {
             var nextPoint = p.Next(d);
-            int newX = (nextPoint.X + Size) % Size;
-            int newY = (nextPoint.Y + Size) % Size;
+            int newX = (nextPoint.X + SizeX) % SizeX;
+            int newY = (nextPoint.Y + SizeY) % SizeY;
             return new Point(newX, newY);
         }
 
         public override Point NextDiagonal(Point p, Direction d)
         {
             var nextPoint = p.NextDiagonal(d);
-            int newX = (nextPoint.X + Size) % Size;
-            int newY = (nextPoint.Y + Size) % Size;
+            int newX = (nextPoint.X + SizeX) % SizeX;
+            int newY = (nextPoint.Y + SizeY) % SizeY;
             return new Point(newX, newY);
         }
     }

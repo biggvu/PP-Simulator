@@ -13,7 +13,7 @@ public class SmallTorusMapTests
         // Act
         var map = new SmallTorusMap(size);
         // Assert
-        Assert.Equal(size, map.Size);
+        Assert.Equal(size, map.SizeX);
     }
 
     [Theory]
