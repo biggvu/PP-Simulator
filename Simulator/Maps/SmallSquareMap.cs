@@ -32,14 +32,18 @@ namespace Simulator.Maps
         public override Point Next(Point p, Direction d)
         {
             var nextPoint = p.Next(d);
-            return Exist(nextPoint) ? nextPoint : p;
+            int newX = (nextPoint.X + Size) % Size;
+            int newY = (nextPoint.Y + Size) % Size;
+            return new Point(newX, newY);
         }
 
         //zwraca nowy punkt przesunięty o jedno pole po skosie w kierunku odchylonym o 45°, zgodnie z ruchem wskazówek zegara, w stosunku do podanego kierunku
         public override Point NextDiagonal(Point p, Direction d)
         {
             var nextPoint = p.NextDiagonal(d);
-            return Exist(nextPoint) ? nextPoint : p;
+            int newX = (nextPoint.X + Size) % Size;
+            int newY = (nextPoint.Y + Size) % Size;
+            return new Point(newX, newY);
         }
     }
 }
