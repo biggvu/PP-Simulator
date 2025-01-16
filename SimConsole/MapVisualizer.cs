@@ -43,13 +43,13 @@ namespace SimConsole
                 Console.Write(Box.Vertical);
                 for (int x = 0; x < width; x++)
                 {
-                    var creatures = _map is SmallMap smallMap ? smallMap.At(x, y).ToList() : new List<Creature>();
+                    var mappables = _map is SmallMap smallMap ? smallMap.At(x, y).ToList() : new List<IMappable>();
                     char cellContent = ' ';
-                    if (creatures.Count == 1)
+                    if (mappables.Count == 1)
                     {
-                        cellContent = creatures.First() is Orc ? 'O' : 'E';
+                        cellContent = mappables.First() is Orc ? 'O' : 'E';
                     }
-                    else if (creatures.Count > 1)
+                    else if (mappables.Count > 1)
                     {
                         cellContent = 'X';
                     }

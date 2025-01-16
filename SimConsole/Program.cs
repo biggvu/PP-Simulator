@@ -12,11 +12,11 @@ class Program
         Console.OutputEncoding = Encoding.UTF8;
 
         SmallSquareMap map = new(5);
-        List<Creature> creatures = new() { new Orc("Gorbag"), new Elf("Elandor") };
+        List<IMappable> mappables = new() { new Orc("Gorbag"), new Elf("Elandor") };
         List<Point> points = new() { new(2, 2), new(3, 1) };
         string moves = "dlrludl";
 
-        Simulation simulation = new(map, creatures, points, moves);
+        Simulation simulation = new(map, mappables, points, moves);
         MapVisualizer mapVisualizer = new(simulation.Map);
 
         int turnNumber = 1;
@@ -25,17 +25,18 @@ class Program
         {
             mapVisualizer.Draw();
 
-            Creature currentCreature = simulation.CurrentCreature;
+            IMappable currentMappable = simulation.CurrentMappable;
 
-            string creatureInfo = currentCreature switch
+            string mappableInfo = currentMappable switch
             {
                 Orc orc => $"ORC {orc.Name} [{orc.Level}][{orc.Rage}] ({orc.Position})",
                 Elf elf => $"ELF {elf.Name} [{elf.Level}][{elf.Agility}] ({elf.Position})",
-                _ => $"{currentCreature.GetType().Name.ToUpper()} {currentCreature.Name} [{currentCreature.Level}] ({currentCreature.Position})"
+                Creature creature => $"{creature.GetType().Name.ToUpper()} {creature.Name} [{creature.Level}] ({creature.Position})",
+                _ => $"{currentMappable.GetType().Name.ToUpper()} [{currentMappable.Position}]"
             };
 
             Console.WriteLine($"Turn {turnNumber}:");
-            Console.WriteLine(creatureInfo);
+            Console.WriteLine(mappableInfo);
             Console.WriteLine($"Direction: {simulation.CurrentMoveName}");
 
             simulation.Turn();

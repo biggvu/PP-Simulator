@@ -9,7 +9,7 @@ namespace Simulator.Maps
     public abstract class SmallMap : Map
     {
         //słownik zawierający stwory na mapie, kluczem jest punkt
-        private readonly Dictionary<Point, List<Creature>> _creatures = new();
+        private readonly Dictionary<Point, List<IMappable>> _mappables = new();
 
         protected SmallMap(int sizeX, int sizeY) : base(sizeX, sizeY)
         {
@@ -19,48 +19,57 @@ namespace Simulator.Maps
             }
         }
 
-        //dodaje stwora na mapie w podanym punkcie
-        public void Add(Creature creature, Point position)
+        //dodaje stwora na mapie w podanym punkcie, zmienione na imappable
+        public void Add(IMappable mappable, Point position)
         {
             if (!Exist(position))
             {
-                throw new ArgumentOutOfRangeException("Position is out of map");
+                throw new ArgumentOutOfRangeException(nameof(position), "Position is outside the map.");
             }
-            if (!_creatures.ContainsKey(position))
+
+            if (!_mappables.ContainsKey(position))
             {
-                _creatures[position] = new List<Creature>();
+                _mappables[position] = new List<IMappable>();
             }
-            _creatures[position].Add(creature);
+
+            _mappables[position].Add(mappable);
         }
 
         //usuwa stwora z mapy z podanego punktu
-        public void Remove(Creature creature, Point point)
+        public void Remove(IMappable mappable, Point position)
         {
-            if (_creatures.ContainsKey(point))
+            if (_mappables.ContainsKey(position))
             {
-                _creatures[point].Remove(creature);
-            }
-            if (_creatures[point].Count == 0)
-            {
-                _creatures.Remove(point);
+                _mappables[position].Remove(mappable);
+
+                if (_mappables[position].Count == 0)
+                {
+                    _mappables.Remove(position);
+                }
             }
         }
+
 
         //przenosi stwora z jednego punktu na drugi
-        public void Move(Creature creature, Point from, Point to)
+        public void Move(IMappable mappable, Point from, Point to)
         {
-            Remove(creature, from);
-            Add(creature, to);
+            if (!Exist(to))
+            {
+                throw new ArgumentOutOfRangeException(nameof(to), "Target position is outside the map.");
+            }
+
+            Remove(mappable, from);
+            Add(mappable, to);
         }
 
         //zwraca listę stworów znajdujących się na podanym punkcie
-        public IEnumerable<Creature> At(Point point)
+        public IEnumerable<IMappable> At(Point position)
         {
-            return _creatures.ContainsKey(point) ? _creatures[point] : new List<Creature>();
+            return _mappables.ContainsKey(position) ? _mappables[position] : Enumerable.Empty<IMappable>();
         }
 
         //zwraca listę stworów znajdujących się na podanym punkcie
-        public IEnumerable<Creature> At(int x, int y)
+        public IEnumerable<IMappable> At(int x, int y)
         {
             return At(new Point(x, y));
         }

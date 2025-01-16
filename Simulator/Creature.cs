@@ -9,7 +9,7 @@ using Simulator.Maps;
 
 namespace Simulator
 {
-    public abstract class Creature
+    public abstract class Creature : IMappable
     {
 
         private string _name = "Unknown"; //wartość domyślna "Unknown"

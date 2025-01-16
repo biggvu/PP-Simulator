@@ -16,7 +16,7 @@ namespace Simulator
         /// <summary>
         /// Creatures moving on the map.
         /// </summary>
-        public List<Creature> Creatures { get; }
+        public List<IMappable> Mappables { get; }
 
         /// <summary>
         /// Starting positions of creatures.
@@ -43,7 +43,7 @@ namespace Simulator
         /// <summary>
         /// Creature which will be moving current turn.
         /// </summary>
-        public Creature CurrentCreature => Creatures[_currentTurn % Creatures.Count];
+        public IMappable CurrentMappable => Mappables[_currentTurn % Mappables.Count];
 
         /// <summary>
         /// Lowercase name of direction which will be used in current turn.
@@ -58,19 +58,19 @@ namespace Simulator
         /// number of starting positions.
         /// </summary>
         //konstruktor sprawdza poprawność creatures, positions, moves; parsuje ruchy z moves na listę kierunków używając DirectorParser; przypisuję każdego stwora do mapy na ich pozycje startowe
-        public Simulation(Map map, List<Creature> creatures, List<Point> positions, string moves)
+        public Simulation(Map map, List<IMappable> mappables, List<Point> positions, string moves)
         {
-            if (creatures == null || creatures.Count == 0 )
+            if (mappables == null || mappables.Count == 0 )
             {
                 throw new ArgumentException("List of creatures cannot be empty");
             }
-            if (positions == null || creatures.Count != positions.Count)
+            if (positions == null || mappables.Count != positions.Count)
             {
                 throw new ArgumentException("Number of creatures must be equal to number of starting positions");
             }
 
             Map = map ?? throw new ArgumentNullException(nameof(map));
-            Creatures = creatures;
+            Mappables = mappables;
             Positions = positions;
             Moves = moves ?? throw new ArgumentNullException(nameof(moves));
 
@@ -81,9 +81,16 @@ namespace Simulator
                 throw new ArgumentException("Moves string does not contain valid directions");
             }
 
-            for (int i = 0; i < creatures.Count; i++)
+            for (int i = 0; i < mappables.Count; i++)
             {
-                creatures[i].AssignMap(map, positions[i]);
+                if (mappables[i] is Creature creature)
+                {
+                    creature.AssignMap(map, positions[i]);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Only creatures are currently supported for simulation.");
+                }
             }
         }
 
@@ -100,7 +107,11 @@ namespace Simulator
                 throw new InvalidOperationException("Simulation is finished");
             }
             var direction = _parsedMoves[_currentTurn % _parsedMoves.Count];
-            CurrentCreature.Go(direction);
+
+            if (CurrentMappable is Creature creature && creature.Position != null)
+            {
+                creature.Go(direction);
+            }
 
             _currentTurn++;
 
