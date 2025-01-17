@@ -39,6 +39,8 @@ namespace Simulator
         //implementacja właściwości Info
         public override string Info => $"{Name} [{Level}][{Rage}]";
 
+        public override char Symbol => 'O';
+
         //konstruktor bezparametrowy
         public Orc() : base()
         {

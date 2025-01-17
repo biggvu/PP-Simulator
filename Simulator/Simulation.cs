@@ -83,13 +83,13 @@ namespace Simulator
 
             for (int i = 0; i < mappables.Count; i++)
             {
-                if (mappables[i] is Creature creature)
+                if (mappables[i] is IMappable mappable)
                 {
-                    creature.AssignMap(map, positions[i]);
+                    mappable.AssignMap(map, positions[i]);
                 }
                 else
                 {
-                    throw new InvalidOperationException("Only creatures are currently supported for simulation.");
+                    throw new InvalidOperationException($"Object at index {i} is not assignable to the map.");
                 }
             }
         }
@@ -106,11 +106,12 @@ namespace Simulator
             {
                 throw new InvalidOperationException("Simulation is finished");
             }
+
             var direction = _parsedMoves[_currentTurn % _parsedMoves.Count];
 
-            if (CurrentMappable is Creature creature && creature.Position != null)
+            if (CurrentMappable != null)
             {
-                creature.Go(direction);
+                CurrentMappable.Move(direction);
             }
 
             _currentTurn++;

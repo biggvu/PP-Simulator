@@ -10,5 +10,7 @@ namespace Simulator.Maps
     {
         Point? Position { get; }
         void AssignMap(Map map, Point position);
+        char Symbol { get; }
+        void Move(Direction direction);
     }
 }

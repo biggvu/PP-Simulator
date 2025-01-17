@@ -38,6 +38,8 @@ namespace Simulator
         //implementacja właściwości Info
         public override string Info => $"{Name} [{Level}][{Agility}]";
 
+        public override char Symbol => 'E';
+
         //konstruktor bezparametrowy
         public Elf() : base()
         {

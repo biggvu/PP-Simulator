@@ -35,7 +35,6 @@ namespace Simulator
 
         }
 
-
         public int Level
         {
             get { return _level; }
@@ -61,6 +60,9 @@ namespace Simulator
         public Point? Position { get; private set; }
         //pole Map, które przechowuje referencję do obiektu klasy Map
         public Map? Map { get; private set; }
+
+        //implementacja właściwości symbol
+        public virtual char Symbol => 'C';
 
         //konstruktor bezparametrowy nic nie robiący
         public Creature() { }
@@ -106,23 +108,22 @@ namespace Simulator
 
 
         //metoda Go() przyjmuje parametr typu Direction i wypisuje w linii informację o ruchu, zmieniona na string Go()
-        public string Go(Direction direction)
+        public void Go(Direction direction)
         {
             if (Position == null || Map == null)
-            {
-                return $"{Name} is not assigned to the map.";
-            }
-            Point newPosition = Map.Next(Position.Value, direction);
+                throw new InvalidOperationException("Creature is not assigned to a map.");
 
-            if (Map is SmallMap smallMap && Position != null)
+            var newPosition = Map.Next(Position.Value, direction);
+
+            if (Map is SmallMap smallMap)
             {
                 smallMap.Move(this, Position.Value, newPosition);
             }
 
             Position = newPosition;
-
-            return $"{Name} moved to {Position}.";
         }
+
+        public void Move(Direction direction) => Go(direction);
 
         //abstrakcyjna klasa Power()
         public abstract int Power { get; }

@@ -47,7 +47,7 @@ namespace SimConsole
                     char cellContent = ' ';
                     if (mappables.Count == 1)
                     {
-                        cellContent = mappables.First() is Orc ? 'O' : 'E';
+                        cellContent = mappables.First().Symbol;
                     }
                     else if (mappables.Count > 1)
                     {
