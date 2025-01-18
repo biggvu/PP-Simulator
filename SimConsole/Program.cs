@@ -34,6 +34,7 @@ class Program
         //koniec opisu zadania
 
         Simulation simulation = new(map, mappables, points, moves);
+
         MapVisualizer mapVisualizer = new(simulation.Map);
 
         int turnNumber = 1;
