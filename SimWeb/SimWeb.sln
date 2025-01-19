@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimWeb", "SimWeb\SimWeb.csproj", "{B26BAD4D-494C-4D25-A7FB-7E7D3B9A625B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "..\Simulator\Simulator\Simulator.csproj", "{35CAC7AB-3A0B-4793-BC99-6FBF65A62813}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B26BAD4D-494C-4D25-A7FB-7E7D3B9A625B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B26BAD4D-494C-4D25-A7FB-7E7D3B9A625B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B26BAD4D-494C-4D25-A7FB-7E7D3B9A625B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B26BAD4D-494C-4D25-A7FB-7E7D3B9A625B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35CAC7AB-3A0B-4793-BC99-6FBF65A62813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35CAC7AB-3A0B-4793-BC99-6FBF65A62813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35CAC7AB-3A0B-4793-BC99-6FBF65A62813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35CAC7AB-3A0B-4793-BC99-6FBF65A62813}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,154 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+        overflow-x: hidden; /* Blokuje przewijanie w poziomie */
+        overflow-y: hidden; /* Blokuje przewijanie w pionie */
+    }
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #cad6ef; /* Jasnoniebieskie t³o */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.navbar {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.custom-navbar {
+    background-color: #250084; /* Ciemnoniebieski */
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: bold; /* Wyboldowany napis */
+    color: #fff1ab !important; /* Jasno¿ó³ty kolor */
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Odstêp miêdzy elementami */
+    margin-left: 15px !important; /* Odstêp od napisu "SimWeb" */
+}
+
+.nav-link {
+    color: white !important; /* Bia³y kolor dla aktywnego linku */
+    text-decoration: none;
+}
+
+    .nav-link.active {
+        font-weight: bold;
+        text-decoration: underline;
+        color: white !important; /* Upewnij siê, ¿e kolor jest poprawnie ustawiony */
+    }
+
+    .nav-link.clickable-link {
+        color: #45dfae !important; /* Dla nieaktywnych linków */
+        text-decoration: none;
+    }
+
+/* Styl dla stopki */
+.footer {
+    background-color: #8368d1; /* Fioletowy */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    z-index: 10;
+}
+
+/* Styl dla mapy */
+.map-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    gap: 2px;
+    transform: translateX(-40px); /* Przesuniêcie w lewo */
+}
+
+
+.map-row {
+    display: flex;
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: 75px;
+    background-color: #a6f0a6; /* Jasnozielony kolor */
+    border: 1px solid #ccc;
+}
+
+.map-image {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
+
+.turn-info {
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.turn-navigation h2 {
+    font-size: 1.8rem;
+    margin: 0 10px;
+}
+
+.turn-navigation a {
+    font-size: 1.5rem;
+    padding: 5px 15px;
+}
+
+/* Styl dla strony Index */
+.page-container {
+    min-height: calc(100vh - 50px); /* Wysokoœæ strony minus wysokoœæ stopki */
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px; /* Dostosuj do swojej szerokoœci */
+    margin: 0 auto; /* Wyœrodkowanie */
+    padding: 0 15px; /* Margines wewnêtrzny */
+}
+
+.orc-image {
+    margin-top: 2rem; /* Odstêp od tekstu */
+    max-width: 300px; /* Maksymalna szerokoœæ obrazka */
+    width: 100%; /* Obrazek dopasowuje siê do szerokoœci */
+    height: auto; /* Zachowanie proporcji */
+    display: block;
+    margin-left: auto; /* Wyœrodkowanie */
+    margin-right: auto; /* Wyœrodkowanie */
+}
+
+h5.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.card-text {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
